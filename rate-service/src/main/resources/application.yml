@@ -5,7 +5,8 @@ server:
 exchange-rate:
   api:
     url:  https://api.exchangerate-api.com/v4/latest/
-    key: ${EXCHANGE_RATE_API_KEY} # Should be passed as environment variable
+    key: 69c4fef3de1c680f1356502a62149df4
+  # Should be passed as environment variable
 spring:
   security:
     user:
