@@ -5,10 +5,13 @@ server:
 
 
 spring:
+  output:
+    ansi:
+      enabled: ALWAYS
   datasource:
-    url: jdbc:postgresql://localhost:5432/conversion_db
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: postgres
+    password: newpassword
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

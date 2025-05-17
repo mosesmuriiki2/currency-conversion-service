@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Table(name = "conversions")
+@Table(schema = "conversion_db", name = "conversions")
 @Data
 @Entity
 @NoArgsConstructor
