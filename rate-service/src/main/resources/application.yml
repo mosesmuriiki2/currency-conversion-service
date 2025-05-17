@@ -1,0 +1,20 @@
+server:
+  port: 8067
+  servlet:
+    context-path: /api
+exchange-rate:
+  api:
+    url:  https://api.exchangerate-api.com/v4/latest/
+    key: ${EXCHANGE_RATE_API_KEY} # Should be passed as environment variable
+spring:
+  security:
+    user:
+      name: user
+      password: password
+  application:
+    name: rate-service
+
+logging:
+  level:
+    org.springframework: INFO
+    com.example: DEBUG

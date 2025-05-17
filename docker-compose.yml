@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: conversion_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rate-service:
+    build: ./rate-service
+    container_name: rate-service
+    ports:
+      - "8067:8067"
+    environment:
+      - EXCHANGE_RATE_API_KEY=${EXCHANGE_RATE_API_KEY}
+    depends_on:
+      - postgres
+
+  main-service:
+    build: ./main-service
+    container_name: main-service
+    ports:
+      - "8068:8068"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/conversion_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rate-service:
+        condition: service_started
+
+volumes:
+  postgres-data:
